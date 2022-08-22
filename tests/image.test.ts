@@ -3,14 +3,11 @@ const request = require("supertest");
 var fs = require('fs');
 let exec = require('child_process')
 const { spawn } = require('child_process');
-// let cleanup = require('./cleanup.sh')
 
-// const baseUrl = "http://localhost:8000/v1";
 jest.setTimeout(30000);
 
 describe("this is the integration tests for the image files", () => {
     it("should add a new image with a tag", async () => {
-        // act
         const postResponse = await request("http://127.0.0.1:8000/v1")
             .post("/upload")
             .send({
