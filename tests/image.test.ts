@@ -43,4 +43,50 @@ describe("this is the integration tests for the image files", () => {
        
         expect(result.body.results).toMatchObject(wanted)
     })
+    it("should return a valid list of images",  async () => {
+        const result = await request("http://127.0.0.1:8000/v1")
+           .get("/images")
+           .set("Accept", "application/json")
+           .expect("Content-Type", /json/)
+           .expect(200);
+       const wanted =    [
+        {
+         "created_by": "user-id",
+         "created_timestamp": expect.anything(),
+         "filename": "image-0000.dcm",
+          "id": 1,
+          "size": 0,
+          "tags": [
+            {
+             "id": 1,
+             "name": "foo",
+           },
+            {
+              "id": 2,
+              "name": "bar",
+            },
+        ],
+         "uploaded_timestamp": expect.anything(),
+         "url": expect.anything(),
+        }
+        ]
+      
+       expect(result.body.results).toMatchObject(wanted)
+   })
+
+   // documaentation isnt clear on this scenario
+    it.skip("should be possible to edit tags on an existing image",  async () => {
+        const result = await request("http://127.0.0.1:8000/v1")
+           .put("/images/1")
+           .send({
+            "id": 1,
+            "tags": ["foo2", "bar2"]
+        })
+           .set("Accept", "application/json")
+           .expect("Content-Type", /json/)
+           .expect(200);
+       const wanted =    [ { id: 2, name: 'bar2' }, { id: 1, name: 'foo2' } ]
+      
+       expect(result.body.results).toMatchObject(wanted)
+   })
 })
