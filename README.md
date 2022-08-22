@@ -19,6 +19,8 @@ The tests should run if there are changes to the web app or the database schema.
 
 2. It would have been nice if the delete image endpoint would have been implemented. This would have made test tidy up much easier that cleaning out the db with a script.
 
+3. the current set up isnt ideal as it has the potential to build up state between tests. When i can tear down the data between tests this wont be an issue any more.
+
 
 
 # Feedback on the framework
